@@ -6,8 +6,8 @@
 
 | 订阅 | 策略 | 规则数 |
 | --- | --- | --- |
-| [Apple AI GPT](Rules/Apple-AI-GPT.list) | AI，台湾代理 | 4 |
-| [Apple AI Direct](Rules/Apple-AI-Direct.list) | direct，中国大陆直连 | 7 |
+| [Apple AI GPT](Rules/Apple-AI-GPT.list) | AI代理 | 4 |
+| [Apple AI Direct](Rules/Apple-AI-Direct.list) | Direct | 7 |
 
 普通 Apple 服务继续由现有本地规则 `host-suffix, apple.com, direct` 处理。OpenAI / ChatGPT 服务域名继续由既有 blackmatrix7 OpenAI.list → AI 处理；Apple AI GPT 文件仅覆盖本次拆分涉及的 Apple 侧端点。
 
