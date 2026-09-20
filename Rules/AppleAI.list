@@ -1,0 +1,15 @@
+# Apple Intelligence + ChatGPT Extension
+# Quantumult X filter rules
+
+host, gateway.icloud.com
+host, guzzoni.apple.com
+host, cp4.cloudflare.com
+host, gspe1-ssl.ls.apple.com
+host, apple-relay.apple.com
+host, apple-relay.cloudflare.com
+host, apple-relay.fastly-edge.com
+host, apple-relay.akamaized.net
+host, apple-relay.mask.apple-dns.net
+host, api-siri-prod.apple.com
+host, smoot.apple.com
+host, aapps.mzstatic.com
