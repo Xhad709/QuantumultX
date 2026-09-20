@@ -1,0 +1,19 @@
+# Apple AI GPT
+# Quantumult X 原生规则；策略 AI = 台湾代理。
+# 从 ddgksf2013/Filter/AppleIntelligence.list 拆分，保留原有后缀匹配。
+# OpenAI / ChatGPT 服务域名继续由既有 OpenAI.list -> AI 处理。
+# 此文件是直连优先的混合分流基线，尚未经用户实机验证 GPT Extension。
+# Cloudflare / Fastly 共享 relay 当前位于 Apple-AI-Direct.list。
+# 如混合分流下 GPT Extension 失败，按请求记录逐个检查共享 relay。
+
+# Apple 官方列为 Apple Intelligence Extensions。
+host-suffix, apple-relay.apple.com, AI
+
+# 社区规则中的 Extension relay；不代表只用于 GPT。
+host-suffix, apple-relay.mask.apple-dns.net, AI
+
+# 沿用原列表的 relay 候选；具体必要性待请求记录验证。
+host-suffix, apple-relay.akamaized.net, AI
+
+# 地区判断兼容性候选，不是 GPT 专属；可能影响其他 Apple 服务的地区判断。
+host-suffix, gspe1-ssl.ls.apple.com, AI

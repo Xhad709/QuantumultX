@@ -1,0 +1,20 @@
+# Apple AI Direct
+# Quantumult X 原生规则；策略 direct = 中国大陆直连。
+# 从 ddgksf2013/Filter/AppleIntelligence.list 拆分，保留原有后缀匹配。
+# 依据：用户报告关闭 QX 后多项 Apple 自有 AI 功能可用，额外重启后仍正常。
+# 功能测试支持当前环境下直连可用，不等于逐个域名已验证或长期可用保证。
+
+# iCloud / Siri / 搜索相关端点。api-siri-prod 的细分用途和必要性仍待验证。
+host-suffix, gateway.icloud.com, direct
+host-suffix, guzzoni.apple.com, direct
+host-suffix, smoot.apple.com, direct
+host-suffix, api-siri-prod.apple.com, direct
+
+# Apple 官方列出的 PCC 端点。
+host-suffix, cp4.cloudflare.com, direct
+
+# 以下两个也被 v2fly 列入 ChatGPT Extension，存在用途重叠。
+# 按直连优先目标暂放本文件；GPT Extension 的混合路由兼容性尚未实机验证。
+# 如确需代理，应从本文件移除对应规则后再加入 GPT 文件，避免重复冲突。
+host-suffix, apple-relay.cloudflare.com, direct
+host-suffix, apple-relay.fastly-edge.com, direct
