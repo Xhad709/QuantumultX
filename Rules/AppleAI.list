@@ -1,15 +1,16 @@
 # Apple Intelligence + ChatGPT Extension
 # Quantumult X filter rules
+# Updated: 2026-09-20
+# Policy is intentionally omitted; set force-policy in Quantumult X.
 
-host, gateway.icloud.com
-host, guzzoni.apple.com
-host, cp4.cloudflare.com
-host, gspe1-ssl.ls.apple.com
-host, apple-relay.apple.com
-host, apple-relay.cloudflare.com
-host, apple-relay.fastly-edge.com
-host, apple-relay.akamaized.net
-host, apple-relay.mask.apple-dns.net
-host, api-siri-prod.apple.com
-host, smoot.apple.com
-host, aapps.mzstatic.com
+host-suffix, gateway.icloud.com
+host-suffix, apple-relay.apple.com
+host-suffix, apple-relay.fastly-edge.com
+host-suffix, apple-relay.cloudflare.com
+host-suffix, guzzoni.apple.com
+host-suffix, cp4.cloudflare.com
+host-suffix, gspe1-ssl.ls.apple.com
+host-suffix, smoot.apple.com
+host-suffix, apple-relay.akamaized.net
+host-suffix, apple-relay.mask.apple-dns.net
+host-suffix, aapps.mzstatic.com
