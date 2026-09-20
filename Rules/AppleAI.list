@@ -1,7 +1,8 @@
-# Apple Intelligence + ChatGPT Extension
-# Quantumult X filter rules
-# Updated: 2026-09-20
+# Apple Intelligence + ChatGPT Integration
+# Quantumult X — HOST-SUFFIX variant
+# Intended for use with sequential rule matching / routing optimization disabled.
 # Policy is intentionally omitted; set force-policy in Quantumult X.
+# Updated: 2026-09-20
 
 host-suffix, gateway.icloud.com
 host-suffix, apple-relay.apple.com
@@ -14,3 +15,4 @@ host-suffix, smoot.apple.com
 host-suffix, apple-relay.akamaized.net
 host-suffix, apple-relay.mask.apple-dns.net
 host-suffix, aapps.mzstatic.com
+host-suffix, api-siri-prod.apple.com
