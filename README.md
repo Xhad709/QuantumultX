@@ -73,3 +73,9 @@ RocM301 没有覆盖 apple-relay.akamaized.net；api-siri-prod.apple.com 虽未�
 - [Quantumult X 官方示例](https://github.com/crossutility/Quantumult-X/blob/master/sample.conf)。
 
 这两份列表在本仓库手动维护，不自动同步上游。订阅的 update-interval 只会定期下载本仓库的新版本。
+
+## 上游每周检查
+
+已配置每周一北京时间 10:17 的 GitHub Actions 检查，并支持手动 Run workflow。仅在规则变化时创建或更新一个待测试 PR；正式 GPT / Direct 订阅由人工维护，机器人不修改、不自动合并。
+
+[设置权限、邮件通知、日志保留及处理更新的完整说明](docs/apple-ai-upstream.md)。
