@@ -1,6 +1,6 @@
 # Apple AI 上游每周检查
 
-每周一北京时间 10:17 检查，UTC cron 为 `17 2 * * 1`。GitHub 的定时调度可能延迟，不能保证准点。也可在 Actions → Check Apple AI upstream → Run workflow，选择 main 手动运行。
+每周一北京时间 10:30 检查，UTC cron 为 `30 2 * * 1`。GitHub 的定时调度可能延迟，不能保证准点。也可在 Actions → Check Apple AI upstream → Run workflow，选择 main 手动运行。
 
 ## 文件与权限边界
 
@@ -33,7 +33,7 @@
 
 创建 PR 后，后续每组新的差异会更新正文并添加一次评论，让 GitHub 的常规订阅通知提醒你；同样的差异不重复评论。邮件可能合并或延迟，正文修改本身不保证单独发送邮件，因此这里使用评论通知。实际邮箱投递需要在你的账户设置完成后验证。
 
-Actions 失败通知通常发给触发运行的人；定时任务与创建 workflow / 最后修改 cron 的用户有关，单独 Watch 仓库不能保证收到全部失败邮件。部署后请用自己的账号手动 Run workflow。若 workflow 的 cron 提交者显示为机器人，请由自己的账号在网页编辑 cron 为等价写法 `17 2 * * MON`，保持周一北京时间 10:17，让定时通知关联到自己的账号。
+Actions 失败通知通常发给触发运行的人；定时任务与创建 workflow / 最后修改 cron 的用户有关，单独 Watch 仓库不能保证收到全部失败邮件。部署后请用自己的账号手动 Run workflow。若 workflow 的 cron 提交者显示为机器人，请由自己的账号在网页编辑 cron 为等价写法 `30 2 * * MON`，保持周一北京时间 10:30，让定时通知关联到自己的账号。
 
 ## 检测行为
 

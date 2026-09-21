@@ -2,7 +2,7 @@ name: Check Apple AI upstream
 
 on:
   schedule:
-    - cron: '17 2 * * 1' # Monday 10:17 Beijing time, UTC+8
+    - cron: '30 2 * * 1' # Monday 10:30 Beijing time, UTC+8
   workflow_dispatch:
 
 permissions:
