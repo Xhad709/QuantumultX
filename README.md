@@ -2,122 +2,65 @@
 
 ## Apple AI 分流
 
-将墨鱼 AppleIntelligence.list 的 11 个域名拆成两份，采用 Quantumult X 原生 host-suffix 语法。两份列表互不重复，保留上游原有的后缀匹配范围；这是按域名划分的路由基线，不代表端点用途互斥。
+当前 Direct / Proxy 两份列表按 [Apple-AI-xhs](Rules/Apple-AI-xhs.list) 的可用组合拆分，合计 18 条规则，保持相同的匹配类型、范围和策略。用户已报告 xhs 可用；这尚未确定必要域名、具体恢复机制或长期稳定性。
 
-| 订阅 | 策略 | 规则数 |
-| --- | --- | --- |
-| [Apple AI GPT](Rules/Apple-AI-GPT.list) | AI代理 | 4 |
-| [Apple AI Direct](Rules/Apple-AI-Direct.list) | Direct | 7 |
+| 订阅 | 文件内策略 | 规则数 | 本轮状态 |
+| --- | --- | --- | --- |
+| [Apple AI Direct](Rules/Apple-AI-Direct.list) | direct | 1 | 启用 |
+| [Apple AI-Proxy](Rules/Apple-AI-Proxy.list) | proxy | 17 | 启用 |
+| [Apple AI GPT](Rules/Apple-AI-GPT.list) | AI | 4 | 停用，保留旧分配作对照 |
+| [Apple-AI-xhs](Rules/Apple-AI-xhs.list) | 1 direct + 17 proxy | 18 | 停用，保留已报告可用的完整快照 |
 
-普通 Apple 服务继续由现有本地规则 `host-suffix, apple.com, direct` 处理。OpenAI / ChatGPT 服务域名继续由既有 blackmatrix7 OpenAI.list → AI 处理；Apple AI GPT 文件仅覆盖本次拆分涉及的 Apple 侧端点。
+仅 `apple-relay.cloudflare.com` 留在 Direct；其他 17 条参考规则全部放在 Proxy。Direct / Proxy 无重复规则。保留来源的 `siri` 关键词及 `ls.apple.com` 后缀匹配，不将宽范围规则直接认定为最小必要集合。
 
-## Apple-AI-xhs 独立测试
-
-[Apple-AI-xhs](Rules/Apple-AI-xhs.list) 是用户提供的 [RocM301 Apple-AI.list](https://raw.githubusercontent.com/RocM301/Apple-Rule/refs/heads/main/Apple-AI.list) 的 Quantumult X 原生格式测试快照。读取的来源 blob 为 `aec7bcae4686c273c5d9619a92173f1225b3276f`，共 18 条规则，保留原文件的匹配范围与顺序：
-
-| 来源语法 | QX 语法 |
-| --- | --- |
-| DOMAIN | host |
-| DOMAIN-SUFFIX | host-suffix |
-| DOMAIN-KEYWORD | host-keyword |
-
-仅 `apple-relay.cloudflare.com` 使用 `direct`，其他 17 条使用 `proxy`。保留来源中的所有项，包括 `siri` 关键词；不将其认定为已经验证的最小必要规则集。
-
-本轮只启用新列表，停用 `Apple AI-Proxy`、`Apple AI Direct`、`Apple AI GPT` 和其他整包 Apple Intelligence 订阅。此前临时将 `apple` 关键词整体改为代理的设置也应撤回为原来的直连策略，避免扩大实际代理范围。
-
-在 `[filter_remote]` 最前部添加：
-
-```ini
-https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Apple-AI-xhs.list, tag=Apple-AI-xhs, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
-```
-
-不要设置 `force-policy`，订阅策略遵循文件中的 `direct / proxy`；统一强制 proxy 会使 Cloudflare 的直连例外失效。将 `proxy` 选为已实测可用的香港节点，保持分流匹配优化关闭，并检查新的实际连接路径。
-
-从明确失效状态重启，使用同一个写作工具操作做恢复测试。若此前已通过全局模式恢复，立即成功可能沿用有效状态，需要等失效后再独立验证。设备上的 DNS、UDP、排除路由沿用当前设置。本次只修改仓库文件和说明，未操作设备配置。
-
-原 Proxy / Direct / GPT 文件保留，下面的候选排查说明属于此前方案，不与本独立测试同时启用。
-
-## 2026-10-01 香港出口排查测试
-
-[Apple AI-Proxy](Rules/Apple-AI-Proxy.list) 当前仅包含 2 条精确匹配规则：`setup.icloud.com` 和 `gateway.icloud.com.cn`，使用 `🇺🇳` 策略。
-
-这两个域名此前均在请求记录中直连，名称不含 apple，未被 Apple 关键词代理覆盖。现有 Direct 文件中的 `gateway.icloud.com` 后缀规则不匹配 `gateway.icloud.com.cn`。它们是本轮排查候选，尚未确认参与 AI 验证或属于必要依赖。
-
-原 Proxy 中的 `configuration.apple.com`、`gsa.apple.com`、`gsas.apple.com`、`ls.apple.com`、`pbs2i.cdn-apple.com`、`albert.apple.com`、`gdmf.apple.com` 七条已从本列表撤出。它们仍由本轮保留的 Apple 关键词香港代理覆盖；失败说明该覆盖组合不足，不能证明这些请求与 AI 无关。`itunes.apple.com` 也尚未单独实测排除，本轮同样由 Apple 关键词基线覆盖。
-
-最新记录：
-- 大陆网络下恢复后约一天可能再次失效；持续全局香港代理跨过此前失效窗口仍正常；香港电话卡下重启也能恢复。
-- 上午香港电话卡恢复后不久，扩大 Apple 代理测试的成功可能沿用了有效状态，不能将该轮单独视为独立恢复验证。
-- 22:33 用户独立重做测试，从失效状态扩大 Apple 代理并重启仍无法恢复；此前扩大 Apple 代理可行的判断撤回。
-- 22:50 用户确认全局代理加重启仍能恢复，因此转向 Apple 关键词之外的请求及模式差异。本轮仅新增上述两个 iCloud 端点的代理覆盖。
-
-将下行放在 `[filter_remote]` 的最前部，先于现有 GPT、Direct 和其他插入资源：
-
-```ini
-https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Apple-AI-Proxy.list, tag=Apple AI-Proxy, force-policy=🇺🇳, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
-```
-
-本轮操作：
-1. 手动更新 Proxy，确认文件只包含上述两条活动规则。
-2. 回到此前已失败的规则模式对照：保留 `host-keyword, apple, 🇺🇳` 及原专项列表的香港代理设置，固定与成功全局模式相同的可用节点，保持分流匹配优化关闭。本轮不要同时恢复 Apple / PCC 直连，也不要改变 DNS、UDP、排除路由。
-3. 上述对照仍可能被其他前置规则覆盖，检查实际新连接：两个 iCloud 域名应命中 Proxy，原 Apple / PCC 请求应沿用此前的香港路径。
-4. 用户刚通过全局恢复后，立即切换本方案成功可能沿用有效状态。可观察维持可用性；独立恢复测试需要等明确再次失效，在相同网络下确认旧对照仍失败，再启用本列表、重启并测试同一个操作。
-5. 若恢复，停止增加规则，保存请求记录。本轮两个域名同时加入，只能先定位到这个新增组，需要后续失效状态下的拆分验证；若仍失败，保留记录，继续查其他未覆盖请求或模式差异。
-
-原 Direct / GPT 文件未改动。停用本列表可撤回这两个 iCloud 端点的代理覆盖；设备上的宽泛 Apple 规则及其他 force-policy 需要按所选对照方案恢复。未自动修改设备上的 QX 配置。
+此前 Proxy 中试加的 `configuration.apple.com`、`gsa.apple.com`、`gsas.apple.com`、`pbs2i.cdn-apple.com`、`albert.apple.com`、`gdmf.apple.com`、`setup.icloud.com`、`gateway.icloud.com.cn` 等独立候选规则均不再单独加入当前列表。撤除表示本轮按可用参考组合复现，不等于实测确认这些请求无关。`ls.apple.com` 仍保留在当前参考集合内。
 
 ## 添加订阅
 
-关闭原来整包 `Apple Intelligence → AI` 的插入资源，将下面两行放到现有 `[filter_remote]` 区域的前部：
+本轮只启用 Direct 和 Proxy，将它们放在 `[filter_remote]` 前部。GPT、xhs、原整包 Apple Intelligence 订阅停用，临时 `apple` 关键词代理恢复为原来的直连策略。已有 OpenAI 服务订阅沿用用户自己的分流设置。
 
 ```ini
-https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Apple-AI-GPT.list, tag=Apple AI GPT, force-policy=AI, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
 https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Apple-AI-Direct.list, tag=Apple AI Direct, force-policy=direct, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
+https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Apple-AI-Proxy.list, tag=Apple AI-Proxy, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
 ```
 
-两份均设置 `inserted-resource=true`，使 GPT 例外先于本地 `apple.com → direct` 命中，并让 Direct 端点先于其他代理订阅命中。原整包订阅必须保持关闭。文件为 QuanX 原生格式，使用 `opt-parser=false`。策略名沿用已有的 `AI` 和 `direct`。
+更新两份资源，Direct 保持 direct；Proxy 的代理策略选择与成功 xhs 测试相同的节点。GPT 文件保持原样，但本轮停用，因此其中的 Apple relay 不再以旧 AI 分配覆盖本轮参考组合。未自动修改设备上的配置。
 
 ## 域名分配
 
-| 域名 | 策略 | 依据与边界 |
-| --- | --- | --- |
-| apple-relay.apple.com | AI | Apple 官方归类为 Apple Intelligence Extensions |
-| apple-relay.mask.apple-dns.net | AI | v2fly 列入 ChatGPT Extension；不能据此断言其专属用途 |
-| apple-relay.akamaized.net | AI | 沿用墨鱼的 relay 候选，具体必要性待实测 |
-| gspe1-ssl.ls.apple.com | AI | 社区规则中的地区判断兼容性候选，可能影响地图、eSIM 等其他服务 |
-| gateway.icloud.com | direct | 沿用原列表，优先直连；没有认定其为 AI 专用端点 |
-| guzzoni.apple.com | direct | Apple 官方归类为 Siri 与听写 |
-| smoot.apple.com | direct | Apple 官方归类为搜索服务 |
-| api-siri-prod.apple.com | direct | 沿用原列表的 Siri 相关候选，细分用途与必要性待验证 |
-| cp4.cloudflare.com | direct | Apple 官方列为 PCC |
-| apple-relay.cloudflare.com | direct | Apple 官方列为 PCC，v2fly 也将其列入 ChatGPT Extension |
-| apple-relay.fastly-edge.com | direct | Apple 官方列为 PCC，v2fly 也将其列入 ChatGPT Extension |
+| 域名或关键词 | QX 匹配类型 | 策略 | 列表 |
+| --- | --- | --- | --- |
+| guzzoni.apple.com | host | proxy | Proxy |
+| mask-api.fe.apple-dns.net | host | proxy | Proxy |
+| mask-api.icloud.com | host | proxy | Proxy |
+| mask-t.apple-dns.net | host | proxy | Proxy |
+| mask.apple-dns.net | host | proxy | Proxy |
+| smoot.apple.com | host-suffix | proxy | Proxy |
+| apple-relay.apple.com | host-suffix | proxy | Proxy |
+| apple-relay.cloudflare.com | host-suffix | direct | Direct |
+| apple-relay.fastly-edge.com | host-suffix | proxy | Proxy |
+| apple-relay.mask.apple-dns.net | host-suffix | proxy | Proxy |
+| cp4.cloudflare.com | host-suffix | proxy | Proxy |
+| gspe1-ssl.ls.apple.com | host-suffix | proxy | Proxy |
+| gateway.icloud.com | host-suffix | proxy | Proxy |
+| ls.apple.com | host-suffix | proxy | Proxy |
+| mask-h2.icloud.com | host-suffix | proxy | Proxy |
+| mask.icloud.com | host-suffix | proxy | Proxy |
+| apps.mzstatic.com | host-suffix | proxy | Proxy |
+| siri | host-keyword | proxy | Proxy |
 
-### 共享 relay 的处理
+## 参考快照
 
-Cloudflare 和 Fastly 两个端点先采用 direct，以符合 Apple 自有 AI 优先直连的目标。同一个域名的请求无法仅靠这两份域名规则按 PCC / GPT 功能分别路由，因此这不是所有环境下均已验证的最小 GPT 规则集。
+xhs 根据 [RocM301 Apple-AI.list](https://raw.githubusercontent.com/RocM301/Apple-Rule/refs/heads/main/Apple-AI.list) 的 blob `aec7bcae4686c273c5d9619a92173f1225b3276f` 转换：DOMAIN → host、DOMAIN-SUFFIX → host-suffix、DOMAIN-KEYWORD → host-keyword。用户指定 Cloudflare relay 直连，其他规则代理。当前拆分使用的 xhs 文件 blob 为 `121700273fe066c1171402304a35e83459cf29c2`。xhs 原文件保留不改，便于对照。
 
-若启用本方案后 GPT Extension 失败，而相同环境下全局台湾代理可用，先对照请求记录测试这两个共享端点。确认某个需要 AI 后，将它从 Direct 文件移除，再加入 GPT 文件。被改走 AI 的共享端点也可能承载 PCC 请求，届时这部分 Apple 云端流量也会经过台湾代理。
+## 测试记录与下一步
 
-## 测试依据
+- 大陆网络下通过全局代理加重启恢复后，曾出现短期直连可用，约一天后再次失效；持续全局代理跨过此前失效窗口仍正常。
+- 香港电话卡下重启也能恢复。上午随后扩大 Apple 代理的成功可能沿用了有效状态，不能单独作为独立恢复验证。
+- 2026-10-01 晚间从失效状态重做测试，原专项列表全部代理及扩大 Apple 代理仍无法恢复；同一节点全局代理加重启仍能恢复。
+- 2026-10-02 用户报告 Apple-AI-xhs 可用，并要求修改原有列表。本次将相同 18 条规则拆成 1 条 Direct 和 17 条 Proxy，先保留整组可用配置。
 
-用户报告在 iPadOS 27 上，通过全局代理加重启恢复功能后，关闭 QX，文字工具、图乐园、扩图与重构、高质量消除、描述创建快捷指令均可使用；额外重启后，开关代理也没有影响这些功能。
-
-这支持该设备与网络条件下的功能直连可用性。没有逐个端点的完整请求记录，本仓库中的 4 + 7 混合分流尚未在设备上验证，GPT Extension 的最小代理集合及长期稳定性仍需实际使用确认。此前恢复的具体原因未确定。
-
-## RocM301 列表的参考价值
-
-该列表可补充排查候选，未发现足以据此直接新增代理规则的实测证据。本次没有把下列九条新增规则加入活动列表：
-
-| 新增项 | 保留作候选的原因 |
-| --- | --- |
-| mask-api.icloud.com、mask-h2.icloud.com、mask.icloud.com | Apple 官方列为 iCloud Private Relay，与 PCC 为不同服务 |
-| mask-api.fe.apple-dns.net、mask-t.apple-dns.net、mask.apple-dns.net | Apple DNS / relay 相关候选，尚无证据证明本次 AI 功能必须经它们代理 |
-| DOMAIN-SUFFIX,ls.apple.com | 比 gspe1-ssl.ls.apple.com 的覆盖范围更宽 |
-| DOMAIN-SUFFIX,apps.mzstatic.com | Apple 内容分发相关候选，下载故障时可检查 |
-| DOMAIN-KEYWORD,siri | 匹配范围过宽，优先使用明确的 Apple 域名 |
-
-RocM301 没有覆盖 apple-relay.akamaized.net；api-siri-prod.apple.com 虽未单独列出，但可被其 siri 关键词规则覆盖。它也把 guzzoni.apple.com 从后缀匹配收窄为精确匹配，因而不是原列表的完整超集。
+先验证拆分后实际路径与 xhs 一致，并观察是否跨过此前的失效窗口。后续只围绕参考组合与失败组合的差异做对照；新增的 iCloud / mzstatic 覆盖与 Cloudflare 直连例外均未被单独证明必要。若继续定位，从明确失效状态做恢复测试；恢复后立刻撤回仍可用不能排除有效状态残留。
 
 ## 来源与维护
 
@@ -127,7 +70,7 @@ RocM301 没有覆盖 apple-relay.akamaized.net；api-siri-prod.apple.com 虽未�
 - [RocM301 Apple-AI.list](https://raw.githubusercontent.com/RocM301/Apple-Rule/refs/heads/main/Apple-AI.list)。
 - [Quantumult X 官方示例](https://github.com/crossutility/Quantumult-X/blob/master/sample.conf)。
 
-这两份列表在本仓库手动维护，不自动同步上游。订阅的 update-interval 只会定期下载本仓库的新版本。
+这些列表在本仓库手动维护，不自动同步上游。订阅的 update-interval 只会定期下载本仓库的新版本。
 
 ## 上游每周检查
 
