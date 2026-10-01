@@ -1,26 +1,17 @@
 # Apple AI-Proxy
-# 2026-10-02 按 Apple-AI-xhs 的当前可用组合拆分。
-# 来源：https://raw.githubusercontent.com/RocM301/Apple-Rule/refs/heads/main/Apple-AI.list
-# 参考快照：Rules/Apple-AI-xhs.list，blob 121700273fe066c1171402304a35e83459cf29c2
-# 保留参考规则的匹配类型、范围及相对顺序，共 17 条 proxy 规则。
-# apple-relay.cloudflare.com 仅在 Apple-AI-Direct.list 中使用 direct。
-# 撤除此前额外猜测的候选域名；本文件不添加 setup.icloud.com 或 gateway.icloud.com.cn。
-# 本轮与 Direct 一起启用，停用旧 GPT、xhs 及其他整包 Apple Intelligence 订阅。
-# proxy 选用 xhs 成功时的同一节点；资源使用 opt-parser=false。
-# 用户报告 xhs 可用，必要域名、恢复条件及长期稳定性尚未单独确定。
+# Quantumult X 原生规则；策略 proxy 由用户在 QX 中绑定代理节点。
+# 补充 RocM301/Apple-Rule/Apple-AI.list 中原 Direct / GPT 未覆盖的 9 条规则。
+# 保留原 Direct 和 GPT 分配；本文件不重复收录已有域名。
+# 原参考组合已报告可用，但这 9 条尚未逐条证明必要，也未验证此拆分组合可用。
+# 资源顺序：Apple AI GPT -> Apple AI Direct -> Apple AI-Proxy。
+# ls.apple.com 与 GPT 的 gspe1-ssl.ls.apple.com 有范围重叠；
+# siri 关键词与 Direct 的 api-siri-prod.apple.com 有范围重叠。
+# 保持分流优化关闭，并让前两份资源优先，以保留原有具体规则。
 
-host, guzzoni.apple.com, proxy
 host, mask-api.fe.apple-dns.net, proxy
 host, mask-api.icloud.com, proxy
 host, mask-t.apple-dns.net, proxy
 host, mask.apple-dns.net, proxy
-host-suffix, smoot.apple.com, proxy
-host-suffix, apple-relay.apple.com, proxy
-host-suffix, apple-relay.fastly-edge.com, proxy
-host-suffix, apple-relay.mask.apple-dns.net, proxy
-host-suffix, cp4.cloudflare.com, proxy
-host-suffix, gspe1-ssl.ls.apple.com, proxy
-host-suffix, gateway.icloud.com, proxy
 host-suffix, ls.apple.com, proxy
 host-suffix, mask-h2.icloud.com, proxy
 host-suffix, mask.icloud.com, proxy
