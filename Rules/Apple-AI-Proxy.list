@@ -1,0 +1,20 @@
+# Apple AI-Proxy
+# 2026-10-01 临时排查列表；Quantumult X 原生规则。
+# 策略 🇺🇳 必须手动选中已实测可用的香港节点。
+# 包含 3 个官方 PCC 端点和 4 组未确认必要性的排查候选。
+# 香港电话卡恢复后不久进行的代理测试可能沿用有效状态，尚非独立恢复验证。
+# 不包含 itunes.apple.com；Apple Music 活动可能解释相关后台请求。
+# 请将本订阅放在其他插入资源之前，并设置 opt-parser=false。
+# 特意覆盖正式 GPT 列表中的 gspe1-ssl.ls.apple.com；仅本轮测试统一到香港。
+# 停用本订阅即可回到原来的规则分配。
+
+# PCC：本轮固定走香港。
+host-suffix, cp4.cloudflare.com, 🇺🇳
+host-suffix, apple-relay.cloudflare.com, 🇺🇳
+host-suffix, apple-relay.fastly-edge.com, 🇺🇳
+
+# 排查候选：并非已确认的 AI 验证入口或必需端点。
+host, configuration.apple.com, 🇺🇳
+host, gsa.apple.com, 🇺🇳
+host, gsas.apple.com, 🇺🇳
+host-suffix, ls.apple.com, 🇺🇳
