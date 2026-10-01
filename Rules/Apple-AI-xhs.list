@@ -1,0 +1,29 @@
+# Apple-AI-xhs
+# Quantumult X 原生规则；独立测试列表。
+# 来源：https://raw.githubusercontent.com/RocM301/Apple-Rule/refs/heads/main/Apple-AI.list
+# 来源版本：aec7bcae4686c273c5d9619a92173f1225b3276f
+# 按原文件逐条转换，保留精确、后缀及关键词匹配范围与顺序。
+# apple-relay.cloudflare.com 使用 direct；其余 17 条使用 proxy。
+# 本轮只启用本订阅，停用 Apple AI-Proxy / Apple AI Direct / Apple AI GPT。
+# 不设置 force-policy，以免覆盖文件内的 direct 例外。
+# proxy 选为已实测可用的香港节点；资源使用 opt-parser=false。
+# 按用户要求复制为测试快照，不代表这些域名的必要性或最小规则集已验证。
+
+host, guzzoni.apple.com, proxy
+host, mask-api.fe.apple-dns.net, proxy
+host, mask-api.icloud.com, proxy
+host, mask-t.apple-dns.net, proxy
+host, mask.apple-dns.net, proxy
+host-suffix, smoot.apple.com, proxy
+host-suffix, apple-relay.apple.com, proxy
+host-suffix, apple-relay.cloudflare.com, direct
+host-suffix, apple-relay.fastly-edge.com, proxy
+host-suffix, apple-relay.mask.apple-dns.net, proxy
+host-suffix, cp4.cloudflare.com, proxy
+host-suffix, gspe1-ssl.ls.apple.com, proxy
+host-suffix, gateway.icloud.com, proxy
+host-suffix, ls.apple.com, proxy
+host-suffix, mask-h2.icloud.com, proxy
+host-suffix, mask.icloud.com, proxy
+host-suffix, apps.mzstatic.com, proxy
+host-keyword, siri, proxy
