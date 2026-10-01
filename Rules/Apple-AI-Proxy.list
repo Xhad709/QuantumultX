@@ -1,22 +1,13 @@
 # Apple AI-Proxy
 # 2026-10-01 临时排查列表；Quantumult X 原生规则。
-# 策略 🇺🇳 必须手动选中已实测可用的香港节点。
-# 当前包含 7 条未确认必要性的排查候选。
-# PCC 三个端点不在本文件；本轮沿用设备上已有的专项列表香港代理设置。
-# 香港电话卡恢复后的短期成功可能沿用有效状态，尚非独立恢复验证。
-# 不包含 itunes.apple.com；尚未实测排除，仅暂不加入本轮。
-# 请将本订阅放在其他插入资源之前，并设置 opt-parser=false。
-# 本轮关闭分流匹配优化；临时覆盖 GPT 列表中的 gspe1-ssl.ls.apple.com。
-# 恢复测试应从明确失效状态开始；本次同时增加三个域名，恢复仅定位到新增组。
-# 停用本订阅即可回到原来的规则分配。
+# 策略 🇺🇳 选中与成功的全局模式相同、已实测可用的香港节点。
+# 当前仅测试 2 个此前日志中直连、Apple 关键词未覆盖的 iCloud 端点。
+# 不能据此认定它们是 AI 验证入口；等待从明确失效状态开始的恢复测试。
+# 本轮保留已失败的 Apple 关键词香港代理及原专项列表香港代理作为对照。
+# 原七条 Apple 候选撤出本文件，其覆盖由上述 Apple 关键词规则保留。
+# 撤出本文件不等于实测确认无关；PCC 仍由设备上的原专项订阅控制。
+# 请放在其他插入资源前面，保持分流匹配优化关闭、opt-parser=false。
+# 全局恢复后立即测试成功可能沿用有效状态，不能当作独立恢复证据。
 
-# 排查候选：并非已确认的 AI 验证入口或必需端点。
-host, configuration.apple.com, 🇺🇳
-host, gsa.apple.com, 🇺🇳
-host, gsas.apple.com, 🇺🇳
-host-suffix, ls.apple.com, 🇺🇳
-
-# 新增候选：成功日志曾出现、旧列表未覆盖；尚未确认与 AI 故障有关。
-host, pbs2i.cdn-apple.com, 🇺🇳
-host, albert.apple.com, 🇺🇳
-host, gdmf.apple.com, 🇺🇳
+host, setup.icloud.com, 🇺🇳
+host, gateway.icloud.com.cn, 🇺🇳
