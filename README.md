@@ -11,6 +11,27 @@
 
 普通 Apple 服务继续由现有本地规则 `host-suffix, apple.com, direct` 处理。OpenAI / ChatGPT 服务域名继续由既有 blackmatrix7 OpenAI.list → AI 处理；Apple AI GPT 文件仅覆盖本次拆分涉及的 Apple 侧端点。
 
+## 2026-10-01 香港出口排查测试
+
+新增 [Apple AI-Proxy](Rules/Apple-AI-Proxy.list)，共 7 条临时规则：3 个 PCC 端点走香港，另覆盖 `configuration.apple.com`、`gsa.apple.com`、`gsas.apple.com`、`ls.apple.com` 四组候选。候选的必要性及具体作用尚未确认；不包含可能来自 Apple Music 的 `itunes.apple.com` 后台请求。
+
+最新观察：大陆网络下恢复后约一天可能再次失效；全局香港代理持续超过此前失效窗口仍正常；香港电话卡下重启也能恢复。11:24 香港电话卡恢复后，11:32 扩大 Apple 代理覆盖的成功可能沿用了有效状态，因此尚不能确认扩大规则能独立从失效状态恢复。原 Direct / GPT 两份列表保留为对照，不能据此前短暂成功认定长期大陆直连稳定。
+
+将下行放在 `[filter_remote]` 的最前部，先于现有 GPT、Direct 和其他插入资源：
+
+```ini
+https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Apple-AI-Proxy.list, tag=Apple AI-Proxy, force-policy=🇺🇳, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
+```
+
+本轮操作：
+1. 使用大陆网络，固定 `🇺🇳` 中已实测可用的香港节点；其余 OpenAI / GPT 策略沿用原设置。
+2. 将临时的 `host-keyword, apple, 🇺🇳` 恢复为原直连策略，让本列表负责缩小后的代理范围。检查实际记录，尤其是 `gspe1-ssl.ls.apple.com` 应由测试列表送往香港。
+3. 本轮保持 DNS、UDP 设置及删除 `17.0.0.0/8` 后的排除路由不变。加回该地址段可能让相关连接绕过 QX，影响代理控制和记录。
+4. 观察能否跨过此前的失效窗口，可先持续 36 小时；这只是测试时长，不代表已证实固定的 24 小时凭据有效期。刚修改后成功可能沿用有效状态，不能单独证明初始化或刷新已修复。
+5. 若明确失效，保存记录，再恢复宽泛 Apple 香港代理，使用同一可用节点重启。如果恢复，支持必要依赖位于本轮删掉的范围中；若仍失败，则扩大覆盖也尚未通过独立恢复验证。
+
+本列表会临时覆盖原 GPT 列表中的 `gspe1-ssl.ls.apple.com`，但不改变其他 GPT relay 的策略。撤回测试时停用本订阅，并将本地 Apple 关键词规则恢复为原直连策略。未自动修改设备上的 QX 配置。
+
 ## 添加订阅
 
 关闭原来整包 `Apple Intelligence → AI` 的插入资源，将下面两行放到现有 `[filter_remote]` 区域的前部：
