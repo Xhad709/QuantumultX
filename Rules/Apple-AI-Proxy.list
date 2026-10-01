@@ -1,13 +1,28 @@
 # Apple AI-Proxy
-# 2026-10-01 临时排查列表；Quantumult X 原生规则。
-# 策略 🇺🇳 选中与成功的全局模式相同、已实测可用的香港节点。
-# 当前仅测试 2 个此前日志中直连、Apple 关键词未覆盖的 iCloud 端点。
-# 不能据此认定它们是 AI 验证入口；等待从明确失效状态开始的恢复测试。
-# 本轮保留已失败的 Apple 关键词香港代理及原专项列表香港代理作为对照。
-# 原七条 Apple 候选撤出本文件，其覆盖由上述 Apple 关键词规则保留。
-# 撤出本文件不等于实测确认无关；PCC 仍由设备上的原专项订阅控制。
-# 请放在其他插入资源前面，保持分流匹配优化关闭、opt-parser=false。
-# 全局恢复后立即测试成功可能沿用有效状态，不能当作独立恢复证据。
+# 2026-10-02 按 Apple-AI-xhs 的当前可用组合拆分。
+# 来源：https://raw.githubusercontent.com/RocM301/Apple-Rule/refs/heads/main/Apple-AI.list
+# 参考快照：Rules/Apple-AI-xhs.list，blob 121700273fe066c1171402304a35e83459cf29c2
+# 保留参考规则的匹配类型、范围及相对顺序，共 17 条 proxy 规则。
+# apple-relay.cloudflare.com 仅在 Apple-AI-Direct.list 中使用 direct。
+# 撤除此前额外猜测的候选域名；本文件不添加 setup.icloud.com 或 gateway.icloud.com.cn。
+# 本轮与 Direct 一起启用，停用旧 GPT、xhs 及其他整包 Apple Intelligence 订阅。
+# proxy 选用 xhs 成功时的同一节点；资源使用 opt-parser=false。
+# 用户报告 xhs 可用，必要域名、恢复条件及长期稳定性尚未单独确定。
 
-host, setup.icloud.com, 🇺🇳
-host, gateway.icloud.com.cn, 🇺🇳
+host, guzzoni.apple.com, proxy
+host, mask-api.fe.apple-dns.net, proxy
+host, mask-api.icloud.com, proxy
+host, mask-t.apple-dns.net, proxy
+host, mask.apple-dns.net, proxy
+host-suffix, smoot.apple.com, proxy
+host-suffix, apple-relay.apple.com, proxy
+host-suffix, apple-relay.fastly-edge.com, proxy
+host-suffix, apple-relay.mask.apple-dns.net, proxy
+host-suffix, cp4.cloudflare.com, proxy
+host-suffix, gspe1-ssl.ls.apple.com, proxy
+host-suffix, gateway.icloud.com, proxy
+host-suffix, ls.apple.com, proxy
+host-suffix, mask-h2.icloud.com, proxy
+host-suffix, mask.icloud.com, proxy
+host-suffix, apps.mzstatic.com, proxy
+host-keyword, siri, proxy
