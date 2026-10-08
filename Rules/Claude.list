@@ -1,7 +1,11 @@
 # Claude
-# Quantumult X 分流规则；策略：AI
-# 来源：用户提供的 Clash 规则，保留全部 22 条匹配项。
-# 使用 QX 原生格式，未沿用 Clash 的 no-resolve 参数。
+# 合并日期：2026-10-08；去重后规则数：22
+# 来源 1：https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Claude.list
+# 来源 2：https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/QuantumultX/Claude/Claude.list
+# blackmatrix7 的 3 条规则均已包含在本仓库原有 22 条规则中。
+# 本次为手动合并，不自动同步上游。
+# Quantumult X 原生格式；策略：AI
+# 使用说明：../docs/claude.md
 
 # 核心域名（host-suffix 已覆盖所有 anthropic.com 子域名）
 host-suffix, anthropic.com, AI

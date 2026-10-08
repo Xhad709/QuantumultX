@@ -1,0 +1,33 @@
+# Claude
+# 合并日期：2026-10-08；去重后规则数：22
+# 来源 1：https://raw.githubusercontent.com/Xhad709/QuantumultX/main/Rules/Claude.list
+# 来源 2：https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/QuantumultX/Claude/Claude.list
+# blackmatrix7 的 3 条规则均已包含在本仓库原有 22 条规则中。
+# 本次为手动合并，不自动同步上游。
+# Clash Meta / Mihomo；rule-provider behavior: classical
+# 策略由引用此规则集的 RULE-SET 指定；IP-ASN 需要支持该规则的内核。
+# 使用说明：../docs/claude.md
+
+payload:
+  - 'DOMAIN-SUFFIX,anthropic.com'
+  - 'DOMAIN-SUFFIX,claude.ai'
+  - 'DOMAIN-SUFFIX,claude.com'
+  - 'DOMAIN-SUFFIX,clau.de'
+  - 'DOMAIN-SUFFIX,claudemcpclient.com'
+  - 'DOMAIN-SUFFIX,claudemcpcontent.com'
+  - 'DOMAIN-SUFFIX,claudeusercontent.com'
+  - 'DOMAIN,servd-anthropic-website.b-cdn.net'
+  - 'DOMAIN,anthropic.com.cdn.cloudflare.net'
+  - 'DOMAIN,anthropic.auth0.com'
+  - 'DOMAIN,anthropic-com.ghost.io'
+  - 'DOMAIN-SUFFIX,sentry.io'
+  - 'DOMAIN-SUFFIX,statsigapi.net'
+  - 'DOMAIN,browser-intake-us5-datadoghq.com'
+  - 'DOMAIN-KEYWORD,datadog'
+  - 'DOMAIN-KEYWORD,sift'
+  - 'DOMAIN-SUFFIX,intercom.io'
+  - 'DOMAIN-SUFFIX,intercomcdn.com'
+  - 'DOMAIN,cdn.usefathom.com'
+  - 'IP-CIDR,160.79.104.0/21'
+  - 'IP-CIDR6,2607:6bc0::/32'
+  - 'IP-ASN,399358'
