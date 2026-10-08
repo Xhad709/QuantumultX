@@ -1,0 +1,38 @@
+# Claude
+# Quantumult X 分流规则；策略：AI
+# 来源：用户提供的 Clash 规则，保留全部 22 条匹配项。
+# 使用 QX 原生格式，未沿用 Clash 的 no-resolve 参数。
+
+# 核心域名（host-suffix 已覆盖所有 anthropic.com 子域名）
+host-suffix, anthropic.com, AI
+host-suffix, claude.ai, AI
+host-suffix, claude.com, AI
+host-suffix, clau.de, AI
+host-suffix, claudemcpclient.com, AI
+host-suffix, claudemcpcontent.com, AI
+host-suffix, claudeusercontent.com, AI
+
+# CDN 和静态资源
+host, servd-anthropic-website.b-cdn.net, AI
+host, anthropic.com.cdn.cloudflare.net, AI
+
+# 认证 / 内容
+host, anthropic.auth0.com, AI
+host, anthropic-com.ghost.io, AI
+
+# 监控和遥测
+host-suffix, sentry.io, AI
+host-suffix, statsigapi.net, AI
+host, browser-intake-us5-datadoghq.com, AI
+host-keyword, datadog, AI
+host-keyword, sift, AI
+
+# 客服 / 第三方 widget
+host-suffix, intercom.io, AI
+host-suffix, intercomcdn.com, AI
+host, cdn.usefathom.com, AI
+
+# IP 段 / ASN 兜底
+ip-cidr, 160.79.104.0/21, AI
+ip6-cidr, 2607:6bc0::/32, AI
+ip-asn, 399358, AI
